@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go-Service - Login & Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .auth-container {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .role-selector {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border-radius: 15px;
+            padding: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .role-btn {
+            transition: all 0.3s ease;
+            border-radius: 10px;
+            padding: 12px 24px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            color: white;
+        }
+        
+        .role-btn.active {
+            background: white;
+            color: #3b82f6;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .role-btn:not(.active) {
+            background: transparent;
+        }
+        
+        .role-btn:not(.active):hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #374151;
+        }
+        
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        .auth-form {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .auth-form.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .logo-container {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo-container h1 {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+            color: #6b7280;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e5e7eb;
+        }
+        
+        .divider span {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0 1rem;
+        }
+        
+        .toggle-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #6b7280;
+        }
+        
+        .toggle-link a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .toggle-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .social-login {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .social-btn:hover {
+            border-color: #3b82f6;
+            background: #f8fafc;
+        }
+        
+        .provider-features {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+        
+        .provider-features h4 {
+            color: #1f2937;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .provider-features ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .provider-features li {
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .provider-features li::before {
+            content: '✓';
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        .back-to-home {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 20px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-to-home:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-home {
+                position: fixed;
+                top: 1rem;
+                left: 1rem;
+                z-index: 1000;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-to-home">
+        <i class="fas fa-arrow-left"></i>
+        Kembali
+    </a>
+    
+    <div class="auth-container">
+        <div class="logo-container">
+            <h1>Go Service</h1>
+            <p class="text-gray-600 mt-2">Solusi profesional untuk kebutuhan Anda</p>
+        </div>
+        
+        <!-- Role Selector -->
+        <div class="role-selector">
+            <div class="flex">
+                <button class="role-btn active flex-1" data-role="customer">
+                    <i class="fas fa-user mr-2"></i>
+                    Pelanggan
+                </button>
+                <button class="role-btn flex-1" data-role="provider">
+                    <i class="fas fa-briefcase mr-2"></i>
+                    Penyedia Jasa
+                </button>
+            </div>
+        </div>
+        
+        <!-- Auth Mode Selector -->
+        <div class="flex mb-6">
+            <button id="loginModeBtn" class="flex-1 py-3 font-medium text-blue-600 border-b-2 border-blue-600">
+                Masuk
+            </button>
+            <button id="registerModeBtn" class="flex-1 py-3 font-medium text-gray-500 border-b-2 border-transparent">
+                Daftar
+            </button>
+        </div>
+        
+        <!-- Customer Login Form -->
+        <form id="customerLoginForm" class="auth-form active">
+            <h3 class="text-xl font-bold mb-6 text-center text-gray-800">Masuk sebagai Pelanggan</h3>
+            
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" placeholder="Masukkan email Anda" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-input" placeholder="Masukkan password Anda" required>
+            </div>
+            
+            <div class="flex items-center justify-between mb-4">
+                <label class="flex items-center">
+                    <input type="checkbox" class="mr-2">
+                    <span class="text-sm text-gray-600">Ingat saya</span>
+                </label>
+                <a href="#" class="text-sm text-blue-600 hover:underline">Lupa password?</a>
+            </div>
+            
+            <button type="submit" class="btn-primary">
+                <i class="fas fa-sign-in-alt mr-2"></i>
+                Masuk
+            </button>
+            
+            <div class="divider">
+                <span>atau</span>
+            </div>
+            
+            <div class="social-login">
+                <button type="button" class="social-btn">
+                    <i class="fab fa-google text-red-500"></i>
+                    Google
+                </button>
+                <button type="button" class="social-btn">
+                    <i class="fab fa-facebook-f text-blue-600"></i>
+                    Facebook
+                </button>
+            </div>
+        </form>
+        
+        <!-- Provider Login Form -->
+        <form id="providerLoginForm" class="auth-form">
+            <h3 class="text-xl font-bold mb-6 text-center text-gray-800">Masuk sebagai Penyedia Jasa</h3>
+            
+            <div class="form-group">
+                <label class="form-label">Email atau NIK</label>
+                <input type="text" class="form-input" placeholder="Masukkan email atau NIK Anda" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-input" placeholder="Masukkan password Anda" required>
+            </div>
+            
+            <div class="flex items-center justify-between mb-4">
+                <label class="flex items-center">
+                    <input type="checkbox" class="mr-2">
+                    <span class="text-sm text-gray-600">Ingat saya</span>
+                </label>
+                <a href="#" class="text-sm text-blue-600 hover:underline">Lupa password?</a>
+            </div>
+            
+            <button type="submit" class="btn-primary">
+                <i class="fas fa-sign-in-alt mr-2"></i>
+                Masuk sebagai Penyedia Jasa
+            </button>
+            
+            <div class="provider-features">
+                <h4>Keuntungan Bergabung:</h4>
+                <ul>
+                    <li>Dapatkan pesanan langsung</li>
+                    <li>Pembayaran aman & cepat</li>
+                    <li>Fleksibilitas waktu kerja</li>
+                    <li>Dukungan 24/7</li>
+                </ul>
+            </div>
+        </form>
+        
+        <!-- Customer Register Form -->
+        <form id="customerRegisterForm" class="auth-form">
+            <h3 class="text-xl font-bold mb-6 text-center text-gray-800">Daftar sebagai Pelanggan</h3>
+            
+            <div class="form-group">
+                <label class="form-label">Nama Lengkap</label>
+                <input type="text" class="form-input" placeholder="Masukkan nama lengkap Anda" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" placeholder="Masukkan email Anda" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Nomor Telepon</label>
+                <input type="tel" class="form-input" placeholder="Masukkan nomor telepon Anda" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Alamat</label>
+                <textarea class="form-input" rows="3" placeholder="Masukkan alamat lengkap Anda" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-input" placeholder="Buat password (min. 8 karakter)" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Konfirmasi Password</label>
+                <input type="password" class="form-input" placeholder="Ulangi password Anda" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="flex items-center">
+                    <input type="checkbox" class="mr-2" required>
+                    <span class="text-sm text-gray-600">
+                        Saya setuju dengan <a href="#" class="text-blue-600 hover:underline">Syarat & Ketentuan</a>
+                        dan <a href="#" class="text-blue-600 hover:underline">Kebijakan Privasi</a>
+                    </span>
+                </label>
+            </div>
+            
+            <button type="submit" class="btn-primary">
+                <i class="fas fa-user-plus mr-2"></i>
+                Daftar sebagai Pelanggan
+            </button>
+            
+            <div class="divider">
+                <span>atau</span>
+            </div>
+            
+            <div class="social-login">
+                <button type="button" class="social-btn">
+                    <i class="fab fa-google text-red-500"></i>
+                    Google
+                </button>
+                <button type="button" class="social-btn">
+                    <i class="fab fa-facebook-f text-blue-600"></i>
+                    Facebook
+                </button>
+            </div>
+        </form>
+        
+        <!-- Provider Register Form -->
+        <form id="providerRegisterForm" class="auth-form">
+            <h3 class="text-xl font-bold mb-6 text-center text-gray-800">Daftar sebagai Penyedia Jasa</h3>
+            
+            <div class="form-group">
+                <label class="form-label">Nama Lengkap</label>
+                <input type="text" class="form-input" placeholder="Masukkan nama lengkap Anda" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">NIK</label>
+                <input type="text" class="form-input" placeholder="Masukkan NIK Anda" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" placeholder="Masukkan email Anda" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Nomor Telepon</label>
+                <input type="tel" class="form-input" placeholder="Masukkan nomor telepon Anda" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Alamat</label>
+                <textarea class="form-input" rows="3" placeholder="Masukkan alamat lengkap Anda" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Jenis Layanan</label>
+                <select class="form-input" required>
+                    <option value="">Pilih jenis layanan yang Anda tawarkan</option>
+                    <option value="kebersihan">Kebersihan Rumah</option>
+                    <option value="perbaikan">Perbaikan Rumah</option>
+                    <option value="konstruksi">Pembangunan/Konstruksi</option>
+                    <option value="desain">Desain Interior</option>
+                    <option value="otomotif">Servis Kendaraan</option>
+                    <option value="lainnya">Lainnya</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Pengalaman (Tahun)</label>
+                <input type="number" class="form-input" placeholder="Berapa tahun pengalaman Anda?" min="0" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Deskripsi Keahlian</label>
+                <textarea class="form-input" rows="3" placeholder="Jelaskan keahlian dan pengalaman Anda" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">
+                    <input type="checkbox" class="mr-2" required>
+                    <span class="text-sm text-gray-600">
+                        Saya setuju dengan <a href="#" class="text-blue-600 hover:underline">Syarat & Ketentuan</a>
+                        dan <a href="#" class="text-blue-600 hover:underline">Kebijakan Privasi</a>
+                    </span>
+                </label>
+            </div>  
+            <button type="submit" class="btn-primary">
+                <i class="fas fa-user-plus mr-2"></i>
+                Daftar sebagai Penyedia Jasa
+            </button>
+            <div class="divider">
+                <span>atau</span>
+            </div>
+            <div class="social-login">
+                <button type="button" class="social-btn">
+                    <i class="fab fa-google text-red-500"></i>
+                    Google
+                </button>
+                <button type="button" class="social-btn">
+                    <i class="fab fa-facebook-f text-blue-600"></i>
+                    Facebook
+                </button>
+            </div>
+        </form> 
+    </div>
+    <script>
+        const roleBtns = document.querySelectorAll('.role-btn');
+        const authForms = document.querySelectorAll('.auth-form');
+        const loginModeBtn = document.getElementById('loginModeBtn');
+        const registerModeBtn = document.getElementById('registerModeBtn');
+
+        roleBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                roleBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const role = btn.getAttribute('data-role');
+                authForms.forEach(form => {
+                    form.classList.remove('active');
+                    if (form.id.includes(role)) {
+                        form.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        loginModeBtn.addEventListener('click', () => {
+            loginModeBtn.classList.add('border-blue-600', 'text-blue-600');
+            loginModeBtn.classList.remove('border-transparent', 'text-gray-500');
+            registerModeBtn.classList.remove('border-blue-600', 'text-blue-600');
+            registerModeBtn.classList.add('border-transparent', 'text-gray-500');
+            authForms.forEach(form => form.classList.remove('active'));
+            document.querySelector('#' + (document.querySelector('.role-btn.active').getAttribute('data-role') + 'LoginForm')).classList.add('active');
+        });
+
+        registerModeBtn.addEventListener('click', () => {
+            registerModeBtn.classList.add('border-blue-600', 'text-blue-600');
+            registerModeBtn.classList.remove('border-transparent', 'text-gray-500');
+            loginModeBtn.classList.remove('border-blue-600', 'text-blue-600');
+            loginModeBtn.classList.add('border-transparent', 'text-gray-500');
+            authForms.forEach(form => form.classList.remove('active'));
+            document.querySelector('#' + (document.querySelector('.role-btn.active').getAttribute('data-role') + 'RegisterForm')).classList.add('active');
+        });
+        // Set initial state
+        roleBtns[0].click();
+        loginModeBtn.click();
+    </script>
+</body>
+</html>
+<!-- End of login.html -->
+<!-- This code provides a responsive login and registration interface for both customers and service providers, with role selection, social login options, and a modern design using Tailwind CSS. The forms are animated and

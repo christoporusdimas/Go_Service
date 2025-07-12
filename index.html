@@ -1,0 +1,675 @@
+<?php
+include 'connect.php';
+?>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go-Service</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9fafb;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .testimonial-card {
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: scale(1.03);
+        }
+        
+        .login-form {
+            display: none;
+        }
+        
+        .register-form {
+            display: none;
+        }
+        
+        .active-form {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tab-active {
+            border-bottom: 3px solid #3b82f6;
+            color: #3b82f6;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/51b1c7d3-deae-4cfc-bd62-ce2a1c6b9ae4.png" alt="Logo ServisRumah - bergambar rumah dengan senyuman dan alat perkakas, warna biru dan putih" class="h-10">
+                <h1 class="text-xl font-bold text-blue-600">Go Service</h1>
+            </div>
+            
+            <nav class="hidden md:flex space-x-8">
+                <a href="#services" class="text-gray-700 hover:text-blue-600 transition">Layanan</a>
+                <a href="#how-it-works" class="text-gray-700 hover:text-blue-600 transition">Cara Kerja</a>
+                <a href="#providers" class="text-gray-700 hover:text-blue-600 transition">Mitra Kami</a>
+                <a href="#testimonials" class="text-gray-700 hover:text-blue-600 transition">Testimoni</a>
+            </nav>
+            
+            <div class="flex items-center space-x-4">
+                <button id="loginBtn" class="px-4 py-2 text-blue-600 border border-blue-600 rounded-md hover:bg-blue-50 transition">
+                    <a href="login.html" class="text-blue-600 font-medium hover:text-blue-800 transition">
+                    Masuk
+                    </a>
+                </button>
+                <button id="registerBtn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                    <a href="login.html" class="text-white font-medium hover:text-blue-200 transition">
+                    Daftar
+                    </a>
+                </button>
+                <button class="md:hidden text-gray-600">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white py-16 md:py-24">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">Layanan Home Service Profesional untuk Kebutuhan Anda</h1>
+                <p class="text-xl mb-8">Temukan tukang terbaik untuk kebersihan, perbaikan, pembangunan, desain, atau servis kendaraan di rumah Anda.</p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button class="px-6 py-3 bg-white text-blue-600 font-semibold rounded-md hover:bg-gray-100 transition">
+                        Pesan Sekarang
+                    </button>
+                    <button class="px-6 py-3 border border-white text-white font-semibold rounded-md hover:bg-blue-700 transition">
+                        Jadi Mitra Kami
+                    </button>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3b56e77e-396f-4734-9514-06fcf2e9fba4.png" alt="Ilustrasi pekerja layanan home service dengan latar belakang rumah, menunjukkan berbagai profesi seperti tukang kebersihan, teknisi, dan desainer interior" class="rounded-lg shadow-xl">
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Layanan Kami</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Berbagai solusi profesional untuk kebutuhan rumah dan kendaraan Anda</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Cleaning Service -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9c647d8b-0a56-4f9a-8a01-a97200d0e6d8.png" alt="Pekerja kebersihan profesional sedang membersihkan jendela rumah dengan peralatan lengkap" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-blue-100 p-2 rounded-md mr-3">
+                                <i class="fas fa-broom text-blue-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800">Kebersihan Rumah</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Jasa bersih-bersih rumah, kantor, atau apartemen oleh tenaga profesional dengan peralatan lengkap.</p>
+                        <button class="text-blue-600 font-medium hover:text-blue-800 transition">
+                            <a href="Layanan/kebersihan.html" class="text-blue-600 font-medium hover:text-blue-800 transition">
+                            Lihat Detail <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Repair Service -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d1ad3665-fc07-4293-993f-e0dfc4c3d6dd.png" alt="Teknisi sedang memperbaiki pipa bocor di dapur rumah dengan alat perkakas" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-blue-100 p-2 rounded-md mr-3">
+                                <i class="fas fa-tools text-blue-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800">Perbaikan Rumah</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Perbaikan segala kerusakan di rumah termasuk listrik, plumbing, keramik, dan lainnya.</p>
+                        <button class="text-blue-600 font-medium hover:text-blue-800 transition">
+                            <a href="Layanan/perbaikan.html" class="text-blue-600 font-medium hover:text-blue-800 transition">
+                            Lihat Detail <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Construction Service -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/399b066c-8e58-47e0-877e-1b6c3d927844.png" alt="Pekerja konstruksi sedang membangun dinding rumah dengan alat-alat bangunan" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-blue-100 p-2 rounded-md mr-3">
+                                <i class="fas fa-hammer text-blue-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800">Pembangunan</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Jasa pembangunan dan renovasi rumah, termasuk interior dan eksterior oleh ahli berpengalaman.</p>
+                        <button class="text-blue-600 font-medium hover:text-blue-800 transition">
+                            <a href="Layanan/pembangunan.html" class="text-blue-600 font-medium hover:text-blue-800 transition">
+                            Lihat Detail <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Design Service -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6076c0ea-f28d-4c3c-8d98-178b467eeaff.png" alt="Desainer interior sedang menunjukkan rencana desain di atas meja kerja dengan laptop dan bahan contoh" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-blue-100 p-2 rounded-md mr-3">
+                                <i class="fas fa-pencil-ruler text-blue-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800">Desain Interior</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Jasa desain interior dan eksterior rumah sesuai gaya dan kebutuhan Anda.</p>
+                        <button class="text-blue-600 font-medium hover:text-blue-800 transition">
+                            <a href="Layanan/desain.html" class="text-blue-600 font-medium hover:text-blue-800 transition">
+                            Lihat Detail <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Vehicle Service -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d205b34a-5ebb-497d-8e65-49a910f087cc.png" alt="Mekanik sedang memperbaiki mesin mobil di garasi rumah dengan alat-alat otomotif" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-blue-100 p-2 rounded-md mr-3">
+                                <i class="fas fa-car text-blue-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800">Servis Kendaraan</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Perbaikan dan perawatan kendaraan roda dua dan empat di lokasi Anda.</p>
+                        <button class="text-blue-600 font-medium hover:text-blue-800 transition">
+                            <a href="Layanan/kendaraan.html" class="text-blue-600 font-medium hover:text-blue-800 transition">
+                            Lihat Detail <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Other Services -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b91b9fa6-223f-412a-943a-a899600dd551.png" alt="Berbagai jenis pekerja home service berdiri bersama dengan alat mereka masing-masing" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <div class="bg-blue-100 p-2 rounded-md mr-3">
+                                <i class="fas fa-ellipsis-h text-blue-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800">Layanan Lainnya</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Temukan berbagai layanan home service lainnya sesuai kebutuhan spesifik Anda.</p>
+                        <button class="text-blue-600 font-medium hover:text-blue-800 transition">
+                            <a href="Layanan/lainnya.html" class="text-blue-600 font-medium hover:text-blue-800 transition">
+                            Lihat Detail <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Cara Memesan Layanan</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Hanya dalam 4 langkah mudah, dapatkan layanan profesional di rumah Anda</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-blue-600 text-xl font-bold">1</span>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Pilih Layanan</h3>
+                    <p class="text-gray-600">Temukan layanan yang Anda butuhkan dari berbagai kategori yang tersedia</p>
+                </div>
+                
+                <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-blue-600 text-xl font-bold">2</span>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Buat Pesanan</h3>
+                    <p class="text-gray-600">Isi detail pesanan termasuk lokasi, tanggal, dan waktu kunjungan</p>
+                </div>
+                
+                <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-blue-600 text-xl font-bold">3</span>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Pilih Penyedia</h3>
+                    <p class="text-gray-600">Pilih penyedia jasa terbaik berdasarkan rating, harga, dan ulasan</p>
+                </div>
+                
+                <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-blue-600 text-xl font-bold">4</span>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Tukang Datang</h3>
+                    <p class="text-gray-600">Tukang profesional akan datang sesuai jadwal yang telah ditentukan</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Testimonials -->
+    <section id="testimonials" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Apa Kata Pelanggan Kami</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Pengalaman nyata dari pelanggan yang puas dengan layanan kami</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="testimonial-card p-6 bg-gray-50 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5d65cc01-7928-4ae5-b1d7-d34be9b363e2.png" alt="Foto wanita paruh baya tersenyum" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-semibold">Dian Sastrowardoyo</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"Sangat puas dengan jasa kebersihan dari ServisRumah. Tukangnya profesional dan detail dalam membersihkan setiap sudut rumah saya."</p>
+                </div>
+                
+                <div class="testimonial-card p-6 bg-gray-50 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/adab35c4-3a18-4a60-bbce-4392116c6147.png" alt="Foto pria dewasa mengenakan kacamata" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-semibold">Budi Santoso</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"Teknisi dari ServisRumah berhasil memperbaiki AC saya yang rusak hanya dalam waktu 1 jam. Harganya juga cukup terjangkau."</p>
+                </div>
+                
+                <div class="testimonial-card p-6 bg-gray-50 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2ad4aa39-6b6a-4d7f-b6a1-29e9d25afa0a.png" alt="Foto wanita muda tersenyum dengan latar belakang rumah" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-semibold">Rina Wijaya</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"Desain interior rumah saya dibuat sangat bagus oleh tim ServisRumah. Mereka memahami gaya yang saya inginkan dan mengeksekusi dengan sempurna."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Providers Section -->
+    <section id="providers" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Bergabung Sebagai Penyedia Layanan</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Tingkatkan penghasilan Anda dengan bergabung sebagai mitra penyedia jasa kami</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-6 bg-white rounded-lg shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-user-plus text-blue-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold">Daftar Dengan Mudah</h3>
+                    </div>
+                    <p class="text-gray-600">Buat akun penyedia jasa dalam hitungan menit dengan verifikasi sederhana.</p>
+                </div>
+                
+                <div class="p-6 bg-white rounded-lg shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-briefcase text-blue-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold">Dapatkan Pesanan</h3>
+                    </div>
+                    <p class="text-gray-600">Terima pesanan sesuai keahlian dan lokasi Anda dari ribuan pelanggan kami.</p>
+                </div>
+                
+                <div class="p-6 bg-white rounded-lg shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-money-bill-wave text-blue-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold">Dibayar Langsung</h3>
+                    </div>
+                    <p class="text-gray-600">Dapatkan pembayaran langsung setelah menyelesaikan pekerjaan dengan aman dan cepat.</p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-10">
+                <button class="px-8 py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition">
+                    Daftar Sekarang
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Form Section -->
+    <section class="py-16 bg-blue-600 text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="md:flex">
+                    <div class="md:w-1/2 bg-blue-700 p-8 flex items-center">
+                        <div>
+                            <h2 class="text-2xl font-bold mb-4">Butuh Bantuan Segera?</h2>
+                            <p class="mb-6">Pesan layanan sekarang dan dapatkan tukang profesional di lokasi Anda dalam waktu 24 jam.</p>
+                            <div class="flex items-center mb-3">
+                                <i class="fas fa-phone-alt mr-3"></i>
+                                <span>+62 123 4567 8910</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-envelope mr-3"></i>
+                                <span>cs@goservice.id</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 p-8 text-gray-800">
+                        <h3 class="text-xl font-bold mb-6">Formulir Pemesanan</h3>
+                        <form>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 mb-2">Nama Lengkap</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 mb-2">Nomor Telepon</label>
+                                <input type="tel" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 mb-2">Alamat Lengkap</label>
+                                <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" rows="2"></textarea>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 mb-2">Jenis Layanan</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                                    <option>Pilih Layanan</option>
+                                    <option>Kebersihan Rumah</option>
+                                    <option>Perbaikan Rumah</option>
+                                    <option>Pembangunan</option>
+                                    <option>Desain Interior</option>
+                                    <option>Servis Kendaraan</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                                Pesan Sekarang
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login/Register Modal -->
+    <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
+            <div class="flex border-b">
+                <button id="loginTab" class="flex-1 py-4 font-medium tab-active">Masuk</button>
+                <button id="registerTab" class="flex-1 py-4 font-medium">Daftar</button>
+                <button id="closeModal" class="px-4 text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="p-6">
+                <!-- Login Form -->
+                <form id="customerLoginForm" class="login-form active-form">
+                    <h3 class="text-xl font-bold mb-6 text-center">Masuk sebagai Pelanggan</h3>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Email</label>
+                        <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2">Password</label>
+                        <input type="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                    </div>
+                    <button type="submit" class="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition mb-4">
+                        Masuk
+                    </button>
+                    <div class="text-center">
+                        <a href="#" class="text-blue-600 hover:underline">Lupa password?</a>
+                    </div>
+                </form>
+                
+                <!-- Provider Login Form -->
+                <form id="providerLoginForm" class="login-form">
+                    <h3 class="text-xl font-bold mb-6 text-center">Masuk sebagai Penyedia Jasa</h3>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Email/NIK</label>
+                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2">Password</label>
+                        <input type="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                    </div>
+                    <button type="submit" class="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                        Masuk
+                    </button>
+                </form>
+                
+                <!-- Customer Register Form -->
+                <form id="customerRegisterForm" class="register-form">
+                    <h3 class="text-xl font-bold mb-6 text-center">Daftar sebagai Pelanggan</h3>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Nama Lengkap</label>
+                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Email</label>
+                        <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Nomor Telepon</label>
+                        <input type="tel" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Password</label>
+                        <input type="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2">Konfirmasi Password</label>
+                        <input type="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                    </div>
+                    <button type="submit" class="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                        Daftar
+                    </button>
+                </form>
+                
+                <!-- Provider Register Form -->
+                <form id="providerRegisterForm" class="register-form">
+                    <h3 class="text-xl font-bold mb-6 text-center">Daftar sebagai Penyedia Jasa</h3>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Nama Lengkap</label>
+                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">NIK</label>
+                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Email</label>
+                        <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Nomor Telepon</label>
+                        <input type="tel" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Jenis Jasa</label>
+                        <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                            <option>Pilih Jenis Jasa</option>
+                            <option>Kebersihan</option>
+                            <option>Perbaikan Rumah</option>
+                            <option>Konstruksi</option>
+                            <option>Desain</option>
+                            <option>Otomotif</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Password</label>
+                        <input type="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2">Konfirmasi Password</label>
+                        <input type="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+                    </div>
+                    <button type="submit" class="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                        Daftar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ceaebf85-9249-40e1-9326-4c0b0a4d3ca8.png" alt="Logo kecil ServisRumah" class="h-8 mr-2">
+                        <h3 class="font-bold text-xl">Go Servis</h3>
+                    </div>
+                    <p class="text-gray-400">Solusi profesional untuk semua kebutuhan Anda.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-lg mb-4">Layanan</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Kebersihan</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Perbaikan Rumah</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Pembangunan</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Desain</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Otomotif</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-lg mb-4">Perusahaan</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Tentang Kami</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Karir</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Kebijakan Privasi</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Syarat & Ketentuan</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-lg mb-4">Hubungi Kami</h4>
+                    <div class="space-y-2">
+                        <div class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-blue-400"></i>
+                            <span class="text-gray-400">Kota Harapan indah,Kota Bekasi, Indonesia</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-blue-400"></i>
+                            <span class="text-gray-400">+62 123 4567 8910</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-blue-400"></i>
+                            <span class="text-gray-400">cs@goservice.id</span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-blue-400 hover:text-white transition"><i class="fab fa-facebook-f text-xl"></i></a>
+                        <a href="#" class="text-blue-400 hover:text-white transition"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-blue-400 hover:text-white transition"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-blue-400 hover:text-white transition"><i class="fab fa-linkedin-in text-xl"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>© 2025 GoServis. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        
+        
+        // Form validation and submission
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Here you would add form validation and AJAX submission
+                alert('Form submitted! In a real app, this would send data to the server.');
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
