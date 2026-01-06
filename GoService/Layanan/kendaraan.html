@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go Service - Layanan Kendaraan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/51b1c7d3-deae-4cfc-bd62-ce2a1c6b9ae4.png" alt="Logo Go Service" class="h-10">
+                <h1 class="text-xl font-bold text-blue-600">Go Service</h1>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="../index.html" class="text-gray-700 hover:text-blue-600 transition">Home</a>
+                <a href="#kendaraan" class="text-gray-700 hover:text-blue-600 transition">Layanan Kendaraan</a>
+                <a href="#how-it-works" class="text-gray-700 hover:text-blue-600 transition">Cara Kerja</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <button id="loginBtn" class="px-4 py-2 text-blue-600 border border-blue-600 rounded-md hover:bg-blue-50 transition">
+                    Masuk
+                </button>
+                <button id="registerBtn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                    Daftar
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Kendaraan Service Detail Section -->
+    <section id="kendaraan" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Layanan Kendaraan</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Pilih jenis layanan kendaraan yang Anda butuhkan</p>
+            </div>
+            
+            <div class="flex border-b mb-8">
+                <button class="tab-kendaraan py-4 px-6 font-medium tab-active" data-tab="servis">
+                    Servis Motor
+                </button>
+                <button class="tab-kendaraan py-4 px-6 font-medium" data-tab="perbaikan">
+                    Perbaikan Mobil
+                </button>
+                <button class="tab-kendaraan py-4 px-6 font-medium" data-tab="cuci">
+                    Serbis Kendaraan Besar (Truk, Bus, dll)
+                </button>
+            </div>
+            
+            <!-- Servis Kendaraan -->
+            <div id="servis" class="tab-content active-tab">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <img src="https://placehold.co/600x400?text=Servis+Motor" alt="Servis Motor" class="w-full h-48 object-cover rounded-md mb-4">
+                        <h3 class="text-xl font-semibold mb-2">Servis Motor Profesional</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-600">4.5 (120)</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Spesialis servis Motor dengan pengalaman 10 tahun.</p>
+                        <button class="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                            Pesan Sekarang
+                        </button>
+                    </div>
+                    <!-- More providers... -->
+                </div>
+            </div>
+            
+            <!-- Perbaikan Kendaraan -->
+            <div id="perbaikan" class="tab-content hidden">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <img src="https://placehold.co/600x400?text=Servis+Mobil" alt="Perbaikan Kendaraan" class="w-full h-48 object-cover rounded-md mb-4">
+                        <h3 class="text-xl font-semibold mb-2">Servis Mobil Profesional</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-600">5.0 (85)</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Spesialis perbaikan Mobil dengan pengalaman 15 tahun.</p>
+                        <button class="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                            Pesan Sekarang
+                        </button>
+                    </div>
+                    <!-- More providers... -->
+                </div>
+            </div>
+            
+            <!-- Cuci Kendaraan -->
+            <div id="cuci" class="tab-content hidden">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <img src="https://placehold.co/600x400?text=Servis+Bus" alt="Cuci Kendaraan" class="w-full h-48 object-cover rounded-md mb-4">
+                        <h3 class="text-xl font-semibold mb-2">Servis Bis Profesional</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-600">5.0 (63)</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Spesialis Servis Bus dengan peralatan modern.</p>
+                        <button class="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                            Pesan Sekarang
+                        </button>
+                    </div>
+                    <!-- More providers... -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Cara Memesan Layanan</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Hanya dalam 4 langkah mudah, dapatkan layanan profesional di rumah Anda</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-blue-600 text-xl font-bold">1</span>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Pilih Layanan</h3>
+                    <p class="text-gray-600">Temukan layanan yang Anda butuhkan dari berbagai kategori yang tersedia</p>
+                </div>
+                
+                <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-blue-600 text-xl font-bold">2</span>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Buat Pesanan</h3>
+                    <p class="text-gray-600">Isi detail pesanan termasuk lokasi, tanggal, dan waktu kunjungan</p>
+                </div>
+                
+                <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-blue-600 text-xl font-bold">3</span>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Pilih Penyedia</h3>
+                    <p class="text-gray-600">Pilih penyedia jasa terbaik berdasarkan rating, harga, dan ulasan</p>
+                </div>
+                
+                <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-blue-600 text-xl font-bold">4</span>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Tukang Datang</h3>
+                    <p class="text-gray-600">Tukang profesional akan datang sesuai jadwal yang telah ditentukan</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+      <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ceaebf85-9249-40e1-9326-4c0b0a4d3ca8.png" alt="Logo kecil ServisRumah" class="h-8 mr-2">
+                        <h3 class="font-bold text-xl">Go Servis</h3>
+                    </div>
+                    <p class="text-gray-400">Solusi profesional untuk semua kebutuhan Anda.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-lg mb-4">Layanan</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Kebersihan</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Perbaikan Rumah</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Pembangunan</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Desain</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Otomotif</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-lg mb-4">Perusahaan</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Tentang Kami</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Karir</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Kebijakan Privasi</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Syarat & Ketentuan</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-lg mb-4">Hubungi Kami</h4>
+                    <div class="space-y-2">
+                        <div class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-blue-400"></i>
+                            <span class="text-gray-400">Kota Harapan indah,Kota Bekasi, Indonesia</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-blue-400"></i>
+                            <span class="text-gray-400">+62 123 4567 8910</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-blue-400"></i>
+                            <span class="text-gray-400">cs@goservice.id</span>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-blue-400 hover:text-white transition"><i class="fab fa-facebook-f text-xl"></i></a>
+                        <a href="#" class="text-blue-400 hover:text-white transition"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-blue-400 hover:text-white transition"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-blue-400 hover:text-white transition"><i class="fab fa-linkedin-in text-xl"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p> 2025 GoServis. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab functionality for kendaraan service
+        document.querySelectorAll('.tab-kendaraan').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab-kendaraan').forEach(t => t.classList.remove('tab-active'));
+                tab.classList.add('tab-active');
+                
+                const tabContent = tab.getAttribute('data-tab');
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.toggle('hidden', content.id !== tabContent);
+                    content.classList.toggle('active-tab', content.id === tabContent);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
