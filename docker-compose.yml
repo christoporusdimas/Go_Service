@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # Database Service
+  db:
+    image: mysql:8.0
+    container_name: goservice_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: GoService
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - "3309:3306"
+    volumes:
+      # Automatically initialize database schema and seed mock records
+      - ./database.sql:/docker-entrypoint-initdb.d/database.sql
+      - mysql_data:/var/lib/mysql
+
+  # Apache Web Service
+  web:
+    build: .
+    container_name: goservice_web
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=
+      - DB_NAME=GoService
+
+volumes:
+  mysql_data:
